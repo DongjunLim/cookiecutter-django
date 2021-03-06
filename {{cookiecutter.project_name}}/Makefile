@@ -13,7 +13,7 @@ down:
 	docker-compose down
 
 test:
-	docker-compose run app pytest --cov=src .
+	docker-compose run app sh -c "pytest ." --rm
 
 migrate:
 	docker-compose run app sh -c "python manage.py migrate" --rm

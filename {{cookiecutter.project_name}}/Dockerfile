@@ -1,10 +1,11 @@
 FROM python:3.9-slim
 
-COPY . /{{cookiecutter.project_name}}
-WORKDIR {{cookiecutter.project_name}}
+RUN apt-get update && apt-get install -y g++ default-libmysqlclient-dev
 
-RUN ls
-RUN pip install --no-cache -r requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+ADD . /{{cookiecutter.project_name}}
 
 WORKDIR /{{cookiecutter.project_name}}/src
 
