@@ -13,7 +13,13 @@ down:
 	docker-compose down
 
 test:
-	docker-compose run app sh -c "pytest ." --rm
+	docker-compose run app sh -c "pytest $(TARGET)" --rm
+
+command:
+	docker-compose run app sh -c "python manage.py $(TARGET)" --rm
+
+makemigrations:
+	docker-compose run app sh -c "python manage.py makemigrations $(TARGET)" --rm
 
 migrate:
-	docker-compose run app sh -c "python manage.py migrate" --rm
+	docker-compose run app sh -c "python manage.py migrate $(TARGET)" --rm
