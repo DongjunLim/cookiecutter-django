@@ -1,25 +1,25 @@
 default: build
 
 build:
-	docker-compose build
+	docker-compose -f ./build/standalone.yml build
 
 run:
-	docker-compose up -d
+	docker-compose -f ./build/standalone.yml up -d
 
 up:
-	docker-compose up
+	docker-compose -f ./build/standalone.yml up
 
 down:
-	docker-compose down
+	docker-compose -f ./build/standalone.yml down
 
 test:
-	docker-compose run app sh -c "pytest $(TARGET)" --rm
+	docker-compose -f ./build/standalone.yml run app sh -c "pytest $(TARGET)" --rm
 
 command:
-	docker-compose run app sh -c "python manage.py $(TARGET)" --rm
+	docker-compose -f ./build/standalone.yml run app sh -c "python manage.py $(TARGET)" --rm
 
 makemigrations:
-	docker-compose run app sh -c "python manage.py makemigrations $(TARGET)" --rm
+	docker-compose -f ./build/standalone.yml run app sh -c "python manage.py makemigrations $(TARGET)" --rm
 
 migrate:
-	docker-compose run app sh -c "python manage.py migrate $(TARGET)" --rm
+	docker-compose -f ./build/standalone.yml run app sh -c "python manage.py migrate $(TARGET)" --rm
