@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: ..
+      dockerfile: Dockerfile
+    volumes:
+      - ../src:/{{cookiecutter.project_name}}/src
+    env_file:
+      - ../.env/.standalone/.app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    networks:
+      - default
+    command: >
+      sh -c "chmod 751 wait-for-it.sh
+             ./wait-for-it.sh redis:6379 --
+             ./wait-for-it.sh mysql:3306 --
+             python manage.py runserver 0.0.0.0:8000"
+
+  mysql:
+    image: mysql:8.0.20
+    restart: always
+    volumes:
+      - mysql-volume:/var/lib/standalone/mysql
+    env_file:
+      - ../.env/.standalone/.mysql
+    command: |
+      mysqld 
+      --character-set-server=utf8 
+      --collation-server=utf8_general_ci 
+      --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+  
+  redis:
+    image: redis:6.0-alpine
+    volumes:
+      - redis-volume:/var/lib/standalone/redis/data
+    ports:
+      - "6379:6379"
+    networks:
+      - default
+
+volumes:
+  mysql-volume:
+    external:
+      name: mysql-test-volume
+  redis-volume:
+    external:
+      name: redis-test-volume
