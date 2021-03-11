@@ -111,3 +111,59 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s [%(process)d] [%(levelname)s] %(message)s',
+            'class': 'logging.Formatter',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file_info': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/info.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple',
+        },
+        'file_warning': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/warning.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple',
+        },
+        'file_error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/error.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple',
+        },
+        'file_query': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'logs/sql.log',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file_info', 'file_warning', 'file_error'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['file_query'] if not DEBUG else ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}
