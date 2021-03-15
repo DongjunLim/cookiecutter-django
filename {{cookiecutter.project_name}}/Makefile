@@ -12,6 +12,9 @@ up:
 down:
 	docker-compose -f compose/standalone.yml down
 
+lint:
+	docker-compose -f compose/standalone.yml run app sh -c "flake8 ." --rm
+
 test:
 	docker-compose -f compose/standalone.yml run app sh -c "pytest $(TARGET)" --rm
 
