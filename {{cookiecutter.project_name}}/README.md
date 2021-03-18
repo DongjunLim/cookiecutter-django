@@ -3,7 +3,7 @@
 ## API Docs
 ```shell
 # you need to run server before looking at the api docs.
-$ make up
+$ make run-prod
 
 # api urls
 http://localhost/swagger
@@ -12,14 +12,18 @@ http://localhost/redoc
 
 ## Running the server
 ```shell
-# run server background
-$ make run
+# run dev-server foreground
+$ make run-dev
 
-# run server foreground
-$ make up
+# run fake prod-server
+# it's not real production server.
+$ make run-prod
 
-# stop all containers
-$ make down
+# stop all dev containers
+$ make shutdown
+
+# stop all prod containers
+$ make shutdown-prod 
 ```
 
 ## Test
@@ -38,8 +42,11 @@ $ make lint
 ## DB Migration
 ```shell
 # This is equivalent to "python manage.py makemigrations appname"
-$ make makemigrations TARGET="specific_app"
+$ make migrations TARGET="specific_app"
 
 # This is equivalent to "python manage.py migrate appname"
 $ make migrate TARGET="specific_app"
+
+# This command migrate to the production server
+$ make migrate-prod TARGET="specific_app"
 ```

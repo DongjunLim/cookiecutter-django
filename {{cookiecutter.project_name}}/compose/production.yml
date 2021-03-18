@@ -30,7 +30,6 @@ services:
     command: >
       sh -c "./wait-for-it.sh redis:6379 --
              ./wait-for-it.sh mysql:3306 --
-             python manage.py collectstatic --noinput
              gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000"
 
   mysql:
