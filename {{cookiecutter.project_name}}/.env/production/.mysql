@@ -1,0 +1,4 @@
+# DB ===============================
+MYSQL_DATABASE=production
+MYSQL_ROOT_PASSWORD=prod_password123
+# ==================================

@@ -5,6 +5,7 @@ async-timeout==3.0.1
 attrs==20.3.0
 certifi==2020.12.5
 chardet==4.0.0
+click==7.1.2
 colorama==0.4.4
 coreapi==2.3.3
 coreschema==0.0.4
@@ -16,6 +17,9 @@ entrypoints==0.3
 Faker==6.5.0
 flake8==3.9.0
 flakehell==0.9.0
+gunicorn==20.0.4
+h11==0.12.0
+httptools==0.1.1
 idna==2.10
 inflection==0.5.1
 iniconfig==1.1.1
@@ -47,4 +51,6 @@ toml==0.10.2
 typing-extensions==3.7.4.3
 uritemplate==3.0.1
 urllib3==1.26.3
+uvicorn==0.13.4
+uvloop==0.15.2
 yarl==1.6.3

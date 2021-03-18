@@ -1,27 +1,33 @@
 default: build
 
-COMPOSE_FILE_PATH = compose/standalone.yml
-COMPOSE = docker-compose -f $(COMPOSE_FILE_PATH)
+DEV_COMPOSE_FILE_PATH = compose/standalone.yml
+PROD_COMPOSE_FILE_PATH = compose/production.yml
+
+COMPOSE_DEV = docker-compose -f $(DEV_COMPOSE_FILE_PATH)
+COMPOSE_PROD = docker-compose -f $(PROD_COMPOSE_FILE_PATH)
+
 OPTIONS = --rm
-RUN_CMD = $(COMPOSE) run $(OPTIONS) app sh -c
+
+RUN_CMD = $(COMPOSE_DEV) run $(OPTIONS) app sh -c
+
 
 build:
-	$(COMPOSE) build
+	$(COMPOSE_DEV) build
 
-run:
-	$(COMPOSE) up -d
+run-dev: up
+
+run-prod:
+	$(COMPOSE_PROD) build
+	$(COMPOSE_PROD) up -d
 
 up:
-	$(COMPOSE) up
+	$(COMPOSE_DEV) up
 
 down:
-	$(COMPOSE) down
+	$(COMPOSE_DEV) down
 
 lint:
 	$(RUN_CMD) "flakehell lint"
-
-lint:
-	docker-compose -f compose/standalone.yml run app sh -c "flake8 ." --rm
 
 test:
 	$(RUN_CMD) "pytest --cov=./src --cov-config=./pyproject.toml $(TARGET)"
