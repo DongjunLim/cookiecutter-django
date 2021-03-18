@@ -1,28 +1,36 @@
 default: build
 
+COMPOSE_FILE_PATH = compose/standalone.yml
+COMPOSE = docker-compose -f $(COMPOSE_FILE_PATH)
+OPTIONS = --rm
+RUN_CMD = $(COMPOSE) run $(OPTIONS) app sh -c
+
 build:
-	docker-compose -f compose/standalone.yml build
+	$(COMPOSE) build
 
 run:
-	docker-compose -f compose/standalone.yml up -d
+	$(COMPOSE) up -d
 
 up:
-	docker-compose -f compose/standalone.yml up
+	$(COMPOSE) up
 
 down:
-	docker-compose -f compose/standalone.yml down
+	$(COMPOSE) down
+
+lint:
+	$(RUN_CMD) "flakehell lint"
 
 lint:
 	docker-compose -f compose/standalone.yml run app sh -c "flake8 ." --rm
 
 test:
-	docker-compose -f compose/standalone.yml run app sh -c "pytest $(TARGET)" --rm
+	$(RUN_CMD) "pytest --cov=./src --cov-config=./pyproject.toml $(TARGET)"
 
 command:
-	docker-compose -f compose/standalone.yml run app sh -c "python manage.py $(TARGET)" --rm
+	$(RUN_CMD) "python manage.py $(TARGET)"
 
-makemigrations:
-	docker-compose -f compose/standalone.yml run app sh -c "python manage.py makemigrations $(TARGET)" --rm
+migrations:
+	$(RUN_CMD) "python manage.py makemigrations $(TARGET)"
 
 migrate:
-	docker-compose -f compose/standalone.yml run app sh -c "python manage.py migrate $(TARGET)" --rm
+	$(RUN_CMD) "python manage.py migrate $(TARGET)"
