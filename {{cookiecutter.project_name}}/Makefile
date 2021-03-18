@@ -20,6 +20,9 @@ down:
 lint:
 	$(RUN_CMD) "flakehell lint"
 
+lint:
+	docker-compose -f compose/standalone.yml run app sh -c "flake8 ." --rm
+
 test:
 	$(RUN_CMD) "pytest --cov=./src --cov-config=./pyproject.toml $(TARGET)"
 
