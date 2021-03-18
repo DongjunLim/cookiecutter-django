@@ -9,4 +9,8 @@ ADD . /{{cookiecutter.project_name}}
 
 WORKDIR /{{cookiecutter.project_name}}/src
 
+RUN python manage.py collectstatic
+
+RUN chmod 751 wait-for-it.sh
+
 EXPOSE 8000
