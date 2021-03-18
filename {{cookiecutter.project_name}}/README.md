@@ -32,7 +32,7 @@ $ make test TARGET="specific_app/module_name"
 
 ## Lint
 ```shell
-$ make lints
+$ make lint
 ```
 
 ## DB Migration
