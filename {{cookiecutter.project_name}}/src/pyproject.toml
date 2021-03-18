@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+addopts = "-ra"
+
+[tool.flakehell]
+exclude = ["README.md"]
+format = "colored"
+max_line_length = 120
+
+[tool.flakehell.plugins]
+pycodestyle = ["+*"]
+pyflakes = ["+*"]
+flake8-docstrings = ["-*"]
